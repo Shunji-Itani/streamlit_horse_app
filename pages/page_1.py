@@ -767,3 +767,6 @@ with st.form(key='profile_form'):
 
         st.subheader('特徴重要度')
         st.dataframe(me.feature_importance(X_test))
+
+        st.subheader('特徴量')
+        st.dataframe(X_test)
