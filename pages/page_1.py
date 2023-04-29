@@ -730,8 +730,8 @@ with st.form(key='profile_form'):
 
         st.text('～データ処理中～')
         # 訓練データの処理
-        r = Results.read_pickle(['./data/results_2020.pickle', './data/results2021.pickle', \
-                                 './data/results2022.pickle', './data/results_2023.pickle'])
+        r = Results.read_pickle(['./data/results_2020.pickle', './data/results_2021.pickle', \
+                                 './data/results_2022.pickle', './data/results_2023.pickle'])
         r.preprocessing()
         hr = HorseResults.read_pickle(['./data/horse_results.pickle'])
         r.merge_horse_results(hr)
