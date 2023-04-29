@@ -705,7 +705,7 @@ race_type_dict = {
 }
 
 st.title('過去のレース')
-st.caption('レース直前に指定した出馬表データを読み込んでテスト')
+st.caption('過去レースの出馬表データを読み込んでテスト')
 
 with st.form(key='profile_form'):
     
@@ -761,7 +761,7 @@ with st.form(key='profile_form'):
 
 
         me = ModelEvaluator(model, ['./data/return_tables_2020.pickle', './data/return_tables_2021.pickle',\
-                                    './data/return_tables_2022.pickle', './data/return_tables_2023.pickle'])
+                                    './data/return_tables_2022.pickle', './data/return_tables_2023.pickle'], std=False)
         X_test = stb.data_c.drop(['date'], axis=1)
         pred = me.predict_proba(X_test)
         df = pd.DataFrame()
