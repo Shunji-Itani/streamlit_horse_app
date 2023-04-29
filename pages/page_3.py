@@ -307,7 +307,7 @@ class Results(DataProcessor):
 class HorseResults:
     def __init__(self, horse_results):
         self.horse_results = horse_results.rename(columns=lambda x: x.replace(' ', ''))
-        self.horse_results = horse_results[['日付', '着順', '賞金', '着差', '通過',
+        self.horse_results = self.horse_results[['日付', '着順', '賞金', '着差', '通過',
                                             '開催', '距離']]
         self.preprocessing() #絶対に実行するものだから含めておく
 
