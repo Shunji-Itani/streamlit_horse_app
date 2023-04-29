@@ -725,6 +725,12 @@ with st.form(key='profile_form'):
         '開始日',
         datetime.date(2023, 4, 30)
     )
+    
+    # ラジオ
+    stand = st.radio(
+        '標準化',
+        ('あり', 'なし')
+    )
 
     # ボタン
     submit_btn = st.form_submit_button('送信')
@@ -759,9 +765,13 @@ with st.form(key='profile_form'):
 
         # st.text('読み込み完了！')
 
-
-        me = ModelEvaluator(model, ['./data/return_tables_2020.pickle', './data/return_tables_2021.pickle',\
+        if stand = 'あり':
+            me = ModelEvaluator(model, ['./data/return_tables_2020.pickle', './data/return_tables_2021.pickle',\
+                                    './data/return_tables_2022.pickle', './data/return_tables_2023.pickle'])
+        else:
+            me = ModelEvaluator(model, ['./data/return_tables_2020.pickle', './data/return_tables_2021.pickle',\
                                     './data/return_tables_2022.pickle', './data/return_tables_2023.pickle'], std=False)
+
         X_test = stb.data_c.drop(['date'], axis=1)
         pred = me.predict_proba(X_test)
         df = pd.DataFrame()
