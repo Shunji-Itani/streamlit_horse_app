@@ -302,6 +302,7 @@ class Results(DataProcessor):
 
 class HorseResults:
     def __init__(self, horse_results):
+        self.horse_results = horse_results.rename(columns=lambda x: x.replace(' ', ''))
         self.horse_results = horse_results[['日付', '着順', '賞金', '着差', '通過',
                                             '開催', '距離']]
         self.preprocessing() #絶対に実行するものだから含めておく
@@ -346,7 +347,7 @@ class HorseResults:
         df = self.horse_results.copy()
         
         # 列名に半角スペースがあれば除去する
-        df = df.rename(columns=lambda x: x.replace(' ', ''))
+        # df = df.rename(columns=lambda x: x.replace(' ', ''))
 
         #着順に数字以外の文字列が含まれているものを取り除く
         df['着順'] = pd.to_numeric(df['着順'], errors='coerce')
