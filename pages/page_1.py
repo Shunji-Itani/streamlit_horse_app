@@ -718,11 +718,11 @@ with st.form(key='profile_form'):
         '開始日',
         datetime.date(2023, 4, 30)
     )
-    
+
     # ラジオ
     stand = st.radio(
         '標準化',
-        ('あり', 'なし')
+        ('なし', 'あり')
     )
 
     # ボタン

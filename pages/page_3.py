@@ -729,7 +729,7 @@ with st.form(key='profile_form'):
     # ラジオ
     stand = st.radio(
         '標準化',
-        ('あり', 'なし')
+        ('なし', 'あり')
     )
 
     # ボタン
