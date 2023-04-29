@@ -6,26 +6,13 @@ import re
 import requests
 import pickle
 import datetime
+import lightgbm
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from scipy.special import comb
 from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import LabelEncoder
-
-
-import pandas as pd
-import numpy as np
-import time
-import re
-import requests
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
-from tqdm import tqdm
-from scipy.special import comb
-from sklearn.metrics import roc_auc_score
-from sklearn.preprocessing import LabelEncoder
-
 
 
 class DataProcessor:
@@ -756,24 +743,27 @@ with st.form(key='profile_form'):
         r.process_categorical()
 
         # テストデータの読み込み
-        st = ShutubaTable.scrape(race_id, date)
-        st.preprocessing()
-        hr = HorseResults.read_pickle(['horse_app/data/horse_results.pickle'])
-        st.merge_horse_results(hr)
-        p = Peds.read_pickle(['horse_app/data/peds.pickle'])
+        stb = ShutubaTable.scrape([race_id], date)
+        stb.preprocessing()
+        hr = HorseResults.read_pickle(['./data/horse_results.pickle'])
+        stb.merge_horse_results(hr)
+        p = Peds.read_pickle(['./data/peds.pickle'])
         p.encode()
-        st.merge_peds(p.peds_e)
-        st.process_categorical(r.le_horse, r.le_jockey, r.data_pe)
+        stb.merge_peds(p.peds_e)
+        stb.process_categorical(r.le_horse, r.le_jockey, r.data_pe)
 
-        st.text('！読み込み完了！')
+        # st.text('読み込み完了！')
 
 
-me = ModelEvaluator(model, ['./data/return_tables.pickle'])
-X_test = st.data_c.drop(['date'], axis=1)
-pred = me.predict_proba(X_test)
-df = pd.DataFrame()
-df['確率'] = pred
-df.index = st.data_c['馬番']
+        me = ModelEvaluator(model, ['./data/return_tables.pickle'])
+        X_test = stb.data_c.drop(['date'], axis=1)
+        pred = me.predict_proba(X_test)
+        df = pd.DataFrame()
+        df['確率'] = pred
+        df.index = stb.data_c['馬番']
 
-st.subheader('予測確率')
-st.dataframe(df)
+        st.subheader('予測確率')
+        st.dataframe(df)
+
+        st.subheader('特徴重要度')
+        st.dataframe(me.feature_importance(X_test))
