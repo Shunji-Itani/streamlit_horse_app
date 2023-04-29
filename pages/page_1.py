@@ -23,7 +23,7 @@ class DataProcessor:
         self.data_pe = pd.DataFrame() #after merging peds
         self.data_c = pd.DataFrame() #after processing categorical features
 
-    def merge_horse_results(self, hr, n_samples_list=[5, 9, 'all']):
+    def merge_horse_results(self, hr, n_samples_list=[3, 5, 9, 'all']):
         self.data_h = self.data_p.copy()
         for n_samples in n_samples_list:
             self.data_h = hr.merge_all(self.data_h, n_samples=n_samples)
@@ -753,7 +753,7 @@ with st.form(key='profile_form'):
         # st.text('読み込み完了！')
 
 
-        me = ModelEvaluator(model, ['./data/return_tables_2020.pickle', './data/return_tables_2021.pickle'\
+        me = ModelEvaluator(model, ['./data/return_tables_2020.pickle', './data/return_tables_2021.pickle',\
                                     './data/return_tables_2022.pickle', './data/return_tables_2023.pickle'])
         X_test = stb.data_c.drop(['date'], axis=1)
         pred = me.predict_proba(X_test)
