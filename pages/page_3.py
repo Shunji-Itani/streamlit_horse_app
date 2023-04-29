@@ -765,7 +765,7 @@ with st.form(key='profile_form'):
 
         # st.text('読み込み完了！')
 
-        if stand = 'あり':
+        if stand == 'あり':
             me = ModelEvaluator(model, ['./data/return_tables_2020.pickle', './data/return_tables_2021.pickle',\
                                     './data/return_tables_2022.pickle', './data/return_tables_2023.pickle'])
         else:
