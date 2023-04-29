@@ -705,17 +705,13 @@ st.caption('レース直前に指定した出馬表データを読み込んで�
 with st.form(key='profile_form'):
     
     # # セレクトボックス
-    # race_id = st.selectbox(
-    #     'レースID',
-    #     ('202308010401', '202308010402','202308010403','202308010404', '202308010405', '202308010406', \
-    #      '202308010407', '202308010408', '202308010409', '202308010410', '202308010411', '202308010412')
-    # )
-    # セレクトボックス
     race_id = st.selectbox(
         'レースID',
-        ('202308010301', '202308010302','202308010303','202308010304', '202308010305', '202308010306', \
-         '202308010307', '202308010308', '202308010309', '202308010310', '202308010311', '202308010312')
+        ('202308010401', '202308010402','202308010403','202308010404', '202308010405', '202308010406', \
+         '202308010407', '202308010408', '202308010409', '202308010410', '202308010411', '202308010412')
     )
+    # セレクトボックス
+
     # 日付
     date = st.date_input(
         '開始日',
@@ -733,7 +729,8 @@ with st.form(key='profile_form'):
 
         st.text('～データ処理中～')
         # 訓練データの処理
-        r = Results.read_pickle(['./data/results.pickle'])
+        r = Results.read_pickle(['./data/results_2020.pickle', './data/results2021.pickle', \
+                                 './data/results2022.pickle', './data/results_2023.pickle'])
         r.preprocessing()
         hr = HorseResults.read_pickle(['./data/horse_results.pickle'])
         r.merge_horse_results(hr)
@@ -755,7 +752,8 @@ with st.form(key='profile_form'):
         # st.text('読み込み完了！')
 
 
-        me = ModelEvaluator(model, ['./data/return_tables.pickle'])
+        me = ModelEvaluator(model, ['./data/return_tables_2020.pickle', './data/return_tables_2021.pickle'\
+                                    './data/return_tables_2022.pickle', './data/return_tables_2023.pickle'])
         X_test = stb.data_c.drop(['date'], axis=1)
         pred = me.predict_proba(X_test)
         df = pd.DataFrame()
